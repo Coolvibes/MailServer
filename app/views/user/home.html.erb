@@ -1,0 +1,9 @@
+<h2><center>Welcome to the Mailer</center></h2>
+
+<!--<center>  <button type="button" onclick="window.location.href='/emails/new'">Compose Mail</button> <button type="button">Check Mail</button> </center>
+<!-- p>Find me in app/views/user/sign_up.html.erb</p -->
+
+<center><a href="/emails/new">Compose Mail</a> <a href="/inbox/view">Check Inbox</a> <a href="/inbox/sent">Sent Mail</a></center>
+<br/> <br/>
+
+<%= render partial: "form", locals: {emails:@emails, page:"view"} %>

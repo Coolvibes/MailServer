@@ -1,0 +1,41 @@
+<table style="width:100%">
+    <tr>
+      <th>Sender</th>
+      <th>Receiver</th>
+      <th>Subject</th>
+      <th>Message</th>
+      <th>Time</th>
+      <% if page == "sent" %>
+      <th>Read by all</th>
+      <% else%>
+      <th>Read</th>
+      <% end %>
+    </tr>
+
+  <% emails.each do |e| %>
+      <!--% e.receivers.each do |r|%-->
+      <% @e = e %>
+      <% r= e.receivers.map(&:receiver_email).join(', ') %>
+          <tr>
+            <td><%= e.sender %></td>
+            <td><%= r %></td>
+            <td><%= link_to e.subject, inbox_show_msg_path(:id=> e.id,:read=> 'true') %></td>
+            <td><%= show_mess(@e) %> </td>
+            <td><%= e.created_at%></td>
+            <td>
+              <% if  page== "view" && show_inbox(@e) == true%>
+                  Yes
+              <% elsif page=="sent" && (show_sent(@e) == true)  %>
+                  Yes
+              <% else %>
+                  No
+              <% end %>
+            </td>
+
+          </tr>
+      <!--% end %-->
+  <% end %>
+
+</table>
+
+<%= will_paginate(emails) %>
