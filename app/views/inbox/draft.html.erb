@@ -3,7 +3,7 @@
     <th>Sender</th>
     <th>Receiver</th>
     <th>Subject</th>
-    <!--th>Message</th-->
+    <th>Message</th>
     <th>Action</th>
     <% #if page == "sent" %>
         <!--th>Read by all</th-->
@@ -21,8 +21,9 @@
             <td><%= e.sender %></td>
             <td><%= r %></td>
             <td><%= link_to e.subject, inbox_show_msg_path(:id=> e.id,:read=> 'true') %></td>
-            <!--td><%#= show_mess(@e) %> </td-->
-            <td><%= link_to "Edit" ,edit_email_path(:id=> e.id)%>&nbsp;&nbsp;<%= link_to "Delete" ,inbox_delete_draft_path(:id=> e.id), :data => {:confirm => 'Are you sure?'}%></td>
+            <td><%=show_mess(@e) %> </td>
+
+            <td><%= link_to "Edit" ,edit_email_path(:id=> e.id,:r=>r)%>&nbsp;&nbsp;<%= link_to "Delete" ,inbox_delete_draft_path(:id=> e.id), :data => {:confirm => 'Are you sure?'}%></td>
             <!--td>
               <%# if  page== "view" && show_inbox(@e) == true%>
                   Yes

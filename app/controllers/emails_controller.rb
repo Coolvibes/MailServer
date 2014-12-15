@@ -24,6 +24,7 @@ class EmailsController < ApplicationController
   def edit
 
     @email=Email.find(params[:id])
+    @r= params[:r]
 
     puts "66666666666"
     puts params[:subject]

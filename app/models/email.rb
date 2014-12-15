@@ -32,11 +32,11 @@ class Email < ActiveRecord::Base
 
     !(cnt>5)
 
-    if (cnt>5 == true)
-      return false
-    else
-      return true
-    end
+    #if (cnt>5 == true)
+    #  return false
+    #else
+    #return true
+    #end
 
   end
 

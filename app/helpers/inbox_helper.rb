@@ -24,7 +24,12 @@ end
 
   def show_mess(e)
 
-    e.message.first(3) + "..."
+
+    if e.message.blank?
+      "..."
+    else
+      e.message.first(3) + "..."
+    end
 
   end
 
