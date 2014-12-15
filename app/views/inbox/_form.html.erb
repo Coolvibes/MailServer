@@ -14,6 +14,7 @@
 
   <% emails.each do |e| %>
       <!--% e.receivers.each do |r|%-->
+      <% if e.is_draft== false %>
       <% @e = e %>
       <% r= e.receivers.map(&:receiver_email).join(', ') %>
           <tr>
@@ -33,7 +34,7 @@
             </td>
 
           </tr>
-      <!--% end %-->
+      <% end %>
   <% end %>
 
 </table>

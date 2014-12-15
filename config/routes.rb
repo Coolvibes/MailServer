@@ -5,6 +5,10 @@ Rails.application.routes.draw do
   #create your own custom routes as follows, id becomes a compulsory parameter
   get 'inbox/:id/show_msg' => "inbox#show_msg",  as: :inbox_show_msg
 
+  get 'inbox/draft'
+
+  get 'inbox/delete_draft'
+
   #passing parameters on routes
   # get 'mail/compose'
   # get 'mail/index'

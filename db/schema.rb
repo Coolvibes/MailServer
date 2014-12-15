@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141209064516) do
+ActiveRecord::Schema.define(version: 20141212052206) do
 
   create_table "emails", force: true do |t|
     t.string   "subject"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(version: 20141209064516) do
     t.text     "message"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "is_draft"
   end
 
   create_table "receivers", force: true do |t|

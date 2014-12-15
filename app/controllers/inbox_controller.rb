@@ -13,6 +13,33 @@ class InboxController < ApplicationController
     #@page = Email.paginate(:email => params[:email], :per_page => 4)
   end
 
+  def draft
+
+    #this query cant be same as query for sent, as it will retrieve all and display only the ones
+    #with is_draft=true as per current logic, rather add this in the controller query itself
+
+    #senders = Array.new(current_user.email, nil)
+    #this will mean where :sender is in senders
+
+    #do by rails, as rails has arel integrated
+
+    #@emails=Email.where(:sender=> senders,:is_draft => true).paginate(:page => params[:page], :per_page => 4)
+    @emails=Email.where(:sender => current_user.email,:is_draft => true).paginate(:page => params[:page], :per_page => 4)
+
+
+  end
+
+  def delete_draft
+
+    e=Email.find(params[:id])
+
+    if e.destroy
+      redirect_to inbox_draft_path, alert: "Draft deleted!"
+    else
+      redirect_to inbox_draft_path, alert: "Could not delete draft!"
+    end
+
+  end
 
   ## Show page of a single email
   def show_msg

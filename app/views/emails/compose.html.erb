@@ -15,12 +15,14 @@
     <!--%= f.label :name %>
     <!--%= f.text_field :name %>
 
- <!--% end %>
+ <!--% end %-->
 
  <%= form_for :@user do |f| %>
   First name: <%= f.text_field :first_name %><br />
   Last name : <%= f.text_field :last_name %><br />
   Biography : <%= f.text_area :biography %><br />
   Admin?    : <%= f.check_box :admin %><br />
-  <%= f.submit %>
+  <!--%= #f.submit %-->
+    <p><%= f.submit "Send Email", :name => "send" %>
+    <%= f.submit "Save as Draft", :name => "draft" %></p>
 <% end %>

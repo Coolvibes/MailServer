@@ -50,5 +50,10 @@ git,github
 - Draft Emails
 --
 
+git filter-branch --force --index-filter \'git rm --cached --ignore-unmatch  http:/code.openrain.com/rails/action_mailer_tls' \--prune-empty --tag-name-filter cat -- --all
+
+
+<!--p><%=# f.submit "Send Email", :name => "send" %>
+      <%= #f.submit "Save as Draft", :name => "draft" %></p-->
 
 
