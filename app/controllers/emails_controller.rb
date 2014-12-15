@@ -71,7 +71,7 @@ class EmailsController < ApplicationController
     puts params[:commit]
     #send email or save as draft functionality
 
-    if params[:commit] == "send"
+    if params[:commit] == "Send"
 
 
       if @email.allow_create?
