@@ -19,7 +19,12 @@ module InboxHelper
      return false
    end
 
-end
+ end
+
+ def show_time(e)
+
+   ((Time.now - e.created_at)/5.day) > 1
+ end
 
 
   def show_mess(e,length=10)
@@ -27,10 +32,15 @@ end
 
     if e.message.blank?
       ""
-    else
+    elsif e.message.length > length
       # if > length : ellipsis show with 10 char
       # else - full message
-      e.message.first(3) + "..."
+      e.message.first(length) + "..."
+
+    else
+
+      e.message
+
     end
 
   end

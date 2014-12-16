@@ -28,7 +28,7 @@ class Email < ActiveRecord::Base
 
   def allow_create?
 
-    cnt=Email.where('created_at >= ?', 15.minutes.ago).count
+    cnt=Email.where('created_at >= ?', 15.minutes.ago).where(is_draft: false).count
 
     !(cnt>5)
 

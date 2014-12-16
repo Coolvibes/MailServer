@@ -5,11 +5,11 @@
       <th>Subject</th>
       <th>Message</th>
       <th>Time</th>
-      <% if page == "sent" %>
-      <th>Read by all</th>
-      <% else%>
-      <th>Read</th>
-      <% end %>
+      <% #if page == "sent" %>
+      <!--th>Read by all</th>
+      <#% else%>
+      <th>Read</th-->
+      <% #end %>
     </tr>
 
   <% emails.each do |e| %>
@@ -27,18 +27,36 @@
               <%= current_user.email %>
               <% end %>
             </td>
-            <td><%= link_to e.subject, inbox_show_msg_path(:id=> e.id,:read=> 'true') %></td>
-            <td><%= show_mess(@e) %> </td>
-            <td><%= time_ago_in_words(e.created_at)+" ago"%></td>
-            <td>
-              <% if  page== "view" && show_inbox(@e) == true%>
-                  Yes
-              <% elsif page=="sent" && (show_sent(@e) == true)  %>
-                  Yes
-              <% else %>
-                  No
-              <% end %>
+            <td><%= link_to e.subject, inbox_show_msg_path(:id=> e.id,:read=> 'true') %>
+                <div style="background: lightcoral;align-content: center;width: 100px;text-align: center;
+                        display: inline;border-radius: 6px;float: right;">
+                  <% if  page== "view" && show_inbox(@e) == true%>
+                    Read
+                  <% elsif page=="sent" && (show_sent(@e) == true)  %>
+                    Read by all
+                  <% else %>
+                      Not Read
+                  <% end %>
+
+                </div>
             </td>
+            <td><%= show_mess(@e) %> </td>
+            <td>
+              <% if show_time(@e) %>
+              <%= e.created_at.to_s(:short)%>
+              <% else %>
+              <%= time_ago_in_words(e.created_at)+" ago"%>
+              <%end %>
+            </td>
+            <!--td>
+              <%# if  page== "view" && show_inbox(@e) == true%>
+                  Yes
+              <% #elsif page=="sent" && (show_sent(@e) == true)  %>
+                  Yes
+              <% #else %>
+                  No
+              <% #end %>
+            </td-->
 
           </tr>
       <% end %>

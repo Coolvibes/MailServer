@@ -1,6 +1,6 @@
 class InboxController < ApplicationController
   def view
-    @emails=Email.joins(:receivers).where(receivers: { receiver_email: current_user.email }).
+    @emails=Email.joins(:receivers).where(receivers: { receiver_email: current_user.email }).order(created_at: :desc).
         paginate(:page => params[:page], :per_page => 4)
 
     # @page = Email.paginate(:email => params[:email], :per_page => 4)
@@ -9,7 +9,7 @@ class InboxController < ApplicationController
   end
 
   def sent
-    @emails=Email.where(:sender=> current_user.email).paginate(:page => params[:page], :per_page => 4)
+    @emails=Email.where(:sender=> current_user.email,:is_draft => false).order(created_at: :desc).paginate(:page => params[:page], :per_page => 4)
     #@page = Email.paginate(:email => params[:email], :per_page => 4)
   end
 
@@ -24,7 +24,7 @@ class InboxController < ApplicationController
     #do by rails, as rails has arel integrated
 
     #@emails=Email.where(:sender=> senders,:is_draft => true).paginate(:page => params[:page], :per_page => 4)
-    @emails=Email.where(:sender => current_user.email,:is_draft => true).paginate(:page => params[:page], :per_page => 4)
+    @emails=Email.where(:sender => current_user.email,:is_draft => true).order(created_at: :desc).paginate(:page => params[:page], :per_page => 4)
 
 
   end

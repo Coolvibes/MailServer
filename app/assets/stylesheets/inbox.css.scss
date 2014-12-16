@@ -1,11 +1,17 @@
 body {
   background-color: #e8e8e8;
 }
+table {
+  border-radius: 25px;
+  -moz-border-radius: 25px;
+  webkit-border-radius:25px;
+  }
 
 table, th, td {
     background-color: #d0d0d0;
     border: 1px solid black;
     border-collapse: collapse;
+    ;
   }
 
   th {
@@ -15,4 +21,8 @@ table, th, td {
 
   th, td {
     padding: 5px;
+    word-wrap: break-word;
+    max-width: 150px;
   }
+
+
