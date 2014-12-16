@@ -22,12 +22,14 @@ module InboxHelper
 end
 
 
-  def show_mess(e)
+  def show_mess(e,length=10)
 
 
     if e.message.blank?
-      "..."
+      ""
     else
+      # if > length : ellipsis show with 10 char
+      # else - full message
       e.message.first(3) + "..."
     end
 

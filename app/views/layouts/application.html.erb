@@ -11,7 +11,7 @@
 <div id="user_nav">
   <h1><center>JOSH MAIL SYSTEM</center></h1>
   <% if user_signed_in? %>
-    Signed in as <%= current_user.email %>. Not you? <
+    Signed in as <%= current_user.email %>. <!--Not you? <-->
     <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
     <%= link_to "Home", root_path %>
   <% else %>

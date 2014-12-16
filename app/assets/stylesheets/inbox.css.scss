@@ -1,8 +1,18 @@
-
- table, th, td {
-   border: 1px solid black;
-   border-collapse: collapse;
- }
-th, td {
-  padding: 5px;
+body {
+  background-color: #e8e8e8;
 }
+
+table, th, td {
+    background-color: #d0d0d0;
+    border: 1px solid black;
+    border-collapse: collapse;
+  }
+
+  th {
+    background-color: darkcyan;
+    color: white;
+  }
+
+  th, td {
+    padding: 5px;
+  }
