@@ -8,24 +8,24 @@
 </head>
 <body>
 
-<div id="user_nav">
+<div id="user_nav" style="text-align: center">
   <h1><center>JOSH MAIL SYSTEM</center></h1>
   <% if user_signed_in? %>
     Signed in as <%= current_user.email %>. <!--Not you? <-->
     <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
     <%= link_to "Home", root_path %>
   <% else %>
-    <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "sign in", new_user_session_path %>
+    <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "Sign in", new_user_session_path %>
   <% end %>
 </div>
 
 <% if notice %>
    <!--Notice:-->
-  <p class="alert alert-success"><%= notice %></p>
+  <p class="alert alert-success" align="center"><%= notice %></p>
 <% end %>
 <% if alert %>
  <!-- Alert:-->
-<p class="alert alert-danger"><%= alert %></p>
+<p class="alert alert-danger" align="center"><%= alert %></p>
 <% end %>
 
 <%= yield %>
