@@ -26,9 +26,6 @@ group :test do
   gem "guard-rspec"
 end
 
-#Gem for using fake database
-gem 'faker'
-
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 

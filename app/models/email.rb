@@ -13,31 +13,12 @@ class Email < ActiveRecord::Base
 
 
   def is_not_draft?
-
-    return is_draft==false
-
+    is_draft==false
   end
 
-
-
-  def is_read_by_all?
-
-    #can directly be used by model objects then, no need to write separate queries
-
-  end
 
   def allow_create?
-
-    cnt=Email.where('created_at >= ?', 15.minutes.ago).where(is_draft: false).count
-
-    !(cnt>5)
-
-    #if (cnt>5 == true)
-    #  return false
-    #else
-    #return true
-    #end
-
+    Email.where('created_at >= ?', 15.minutes.ago).where(is_draft: false).count < 5
   end
 
 end

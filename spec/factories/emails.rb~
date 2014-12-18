@@ -1,0 +1,6 @@
+
+factory :email do |f| 
+f.sender { Faker::Name.sender} 
+f.subject { Faker::Name.subject } 
+f.message { Faker::Name.message }
+end 
