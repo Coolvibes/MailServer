@@ -13,18 +13,16 @@
   <% if user_signed_in? %>
     Signed in as <%= current_user.email %>. <!--Not you? <-->
     <%= link_to "Sign out", destroy_user_session_path, :method => :delete %>
-    <%= link_to "Home", root_path %>
+    <%= link_to "Home", root_path, :data => {:confirm => 'Are you sure you want to navigate from this page?'}%>
   <% else %>
     <%= link_to "Sign up", new_user_registration_path %> or <%= link_to "Sign in", new_user_session_path %>
   <% end %>
 </div>
 
 <% if notice %>
-   <!--Notice:-->
   <p class="alert alert-success" align="center"><%= notice %></p>
 <% end %>
 <% if alert %>
- <!-- Alert:-->
 <p class="alert alert-danger" align="center"><%= alert %></p>
 <% end %>
 

@@ -29,6 +29,13 @@ end
 #Gem for using fake database
 gem 'faker'
 
+#Gem for coverage with SimpleCov
+
+group :coverage do
+  gem 'simplecov', :require => false
+end
+
+
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.3'
 

@@ -53,9 +53,6 @@ class InboxController < ApplicationController
 
     r=Receiver.where(email_id: @email.id,receiver_email: current_user.email)
 
-    puts read
-    puts "++++++++++++++++"
-    puts r
 
     if(r.blank? == false)
       Receiver.update(r.first.id,is_read: read)
