@@ -18,11 +18,6 @@ class InboxController < ApplicationController
     #this query cant be same as query for sent, as it will retrieve all and display only the ones
     #with is_draft=true as per current logic, rather add this in the controller query itself
 
-    #senders = Array.new(current_user.email, nil)
-    #this will mean where :sender is in senders
-
-    #do by rails, as rails has arel integrated
-
     #@emails=Email.where(:sender=> senders,:is_draft => true).paginate(:page => params[:page], :per_page => 4)
     @emails=Email.where(:sender => current_user.email,:is_draft => true).order(created_at: :desc).paginate(:page => params[:page], :per_page => 4)
 

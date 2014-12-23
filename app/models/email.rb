@@ -5,6 +5,8 @@ class Email < ActiveRecord::Base
   validates :message, length: { in: 0..1000 },:if => :is_not_draft?
   validates :subject, length: {in: 0..100}, :if => :is_not_draft?
 
+  validate :allow_create?
+
   has_many :receivers
 
   belongs_to :user
@@ -13,12 +15,13 @@ class Email < ActiveRecord::Base
 
 
   def is_not_draft?
-    is_draft==false
+    self.is_draft==false
   end
 
 
   def allow_create?
-    Email.where('created_at >= ?', 15.minutes.ago).where(is_draft: false).where(sender: sender).count< 50
+
+    Email.where('created_at >= ?', 5.minutes.ago).where(is_draft: false).where(sender: self.sender).count< 5
   end
 
 end

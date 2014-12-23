@@ -1,5 +1,7 @@
 <h3>Compose Mail</h3>
 
+<%= javascript_include_tag "check_before_leave" %>
+
 <div style="border:2px solid #a1a1a1;
         margin-top:20px;
         font-size:15px;
@@ -10,7 +12,8 @@
 
 <%= form_for @email do |f| %>
 
-    <%= f.label :subject %><br>
+
+      <%= f.label :subject %><br>
     <%= f.text_field :subject,value: @email.subject%><br>
     <%= f.hidden_field :id, :value => @email.id %>
     <!--%= f.label :sender %><br>
@@ -23,6 +26,8 @@
 
     <%= f.submit "Send" %>
     <%= f.submit "Draft" %>
+
+      <!--  , :input_html => { :onclick => "setUnsaved()"} -->
 
 <% end %>
 </div>

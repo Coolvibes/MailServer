@@ -1,7 +1,5 @@
 <h3>Edit Mail</h3>
 
-<%= javascript_include_tag "check_before_leave" %>
-
 <%= form_for @email do |f| %>
 
     <%= f.label :subject %><br>
