@@ -11,16 +11,10 @@
     <th>Subject</th>
     <th>Message</th>
     <th>Action</th>
-    <% #if page == "sent" %>
-        <!--th>Read by all</th-->
-    <% #else%>
-        <!--th>Read</th-->
-    <% #end %>
   </tr>
 
   <% @emails.each do |e| %>
-      <!--% e.receivers.each do |r|%-->
-      <%# if e.is_draft== true %>
+      <%if e.is_draft== true %>
           <% @e = e %>
           <% r= e.receivers.map(&:receiver_email).join(', ') %>
           <tr>
@@ -28,20 +22,11 @@
             <td><%= r %></td>
             <td><%= link_to e.subject, inbox_show_msg_path(:id=> e.id,:read=> 'true') %></td>
             <td><%=show_mess(@e) %> </td>
-
             <td><%= link_to "Edit" ,edit_email_path(:id=> e.id,:r=>r)%>&nbsp;&nbsp;<%= link_to "Delete" ,inbox_delete_draft_path(:id=> e.id), :data => {:confirm => 'Are you sure?'}%></td>
-            <!--td>
-              <%# if  page== "view" && show_inbox(@e) == true%>
-                  Yes
-              <% #elsif page=="sent" && (show_sent(@e) == true)  %>
-                  Yes
-              <%# else %>
-                  No
-              <% #end %>
-            </td-->
 
           </tr>
-      <% #end %>
+      <% end %>
+
   <% end %>
 
 </table>

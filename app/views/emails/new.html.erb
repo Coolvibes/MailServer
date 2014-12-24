@@ -2,6 +2,8 @@
 
 <%= javascript_include_tag "check_before_leave" %>
 
+<%= javascript_include_tag "apply_ajax" %>
+
 <div style="border:2px solid #a1a1a1;
         margin-top:20px;
         font-size:15px;
@@ -10,22 +12,19 @@
         width:400px;
         border-radius:25px;">
 
-<%= form_for @email do |f| %>
+<%= form_for @email, :html=>{:id=>"form"} do |f| %>
 
 
       <%= f.label :subject %><br>
-    <%= f.text_field :subject,value: @email.subject%><br>
-    <%= f.hidden_field :id, :value => @email.id %>
-    <!--%= f.label :sender %><br>
-    <!--%= f.text_field :sender%><br> -->
-    <%= f.label :receiver_email %><br>
-    <%= f.text_field :receiver_email %><br>
-    <%= f.label :message %><br>
-    <%= f.text_area(:message, size: '50x10', :value => @email.message)%><br>
-    <!--%= #f.submit %-->
-
-    <%= f.submit "Send" %>
-    <%= f.submit "Draft" %>
+      <%= f.text_field :subject,value: @email.subject%><br>
+      <%= f.hidden_field :id, :value => @email.id %>
+      <%= f.label :receiver_email %><br>
+      <%= f.text_field :receiver_email %><br>
+      <%= f.label :message %><br>
+      <%= f.text_area(:message, size: '50x10', :value => @email.message)%><br>
+      <%= f.submit "Send" %>
+      <%= f.submit "Draft" %>
+      <input type="button" value="Test" onclick="formData()"/>
 
       <!--  , :input_html => { :onclick => "setUnsaved()"} -->
 

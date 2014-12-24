@@ -1,20 +1,9 @@
-<!--<head>
-  <h2>Check your mail here!</h2>
-  <style>
-      table, th, td {
-          border: 1px solid black;
-          border-collapse: collapse;
-      }
-      th, td {
-          padding: 5px;
-      }
-  </style>
-</head> -->
 <center><a href="/emails/new">Compose Mail</a> <a href="/inbox/view">Check Inbox</a> <a href="/inbox/sent">Sent Mail</a>
   <a href="/inbox/draft">See Drafts</a></center>
 <br/> <br/>
 
 <h2>Your sent messages</h2>
+
 <%= render partial: "form", locals: {emails:@emails, page:"sent"} %>
 
 

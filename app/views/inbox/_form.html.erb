@@ -1,63 +1,47 @@
 <table style="width:100%">
-    <tr>
-      <th>Sender</th>
-      <th>Receiver</th>
-      <th>Subject</th>
-      <th>Message</th>
-      <th>Time</th>
-      <% #if page == "sent" %>
-      <!--th>Read by all</th>
-      <#% else%>
-      <th>Read</th-->
-      <% #end %>
-    </tr>
+  <tr>
+    <th>Sender</th>
+    <th>Receiver</th>
+    <th>Subject</th>
+    <th>Message</th>
+    <th>Time</th>
+  </tr>
 
   <% emails.each do |e| %>
       <!--% e.receivers.each do |r|%-->
       <% if e.is_draft== false %>
-      <% @e = e %>
-      <% r= e.receivers.map(&:receiver_email).join(', ') %>
+          <% @e = e %>
+          <% r= e.receivers.map(&:receiver_email).join(', ') %>
           <tr>
             <td><%= e.sender %></td>
             <td>
-              <!-- Correcting receiver logic, don't have to receive all the receivers but just the current one -->
               <% if page=="sent" %>
-              <%= r %>
+                  <%= r %>
               <% elsif page== "view"%>
-              <%= current_user.email %>
+                  <%= current_user.email %>
               <% end %>
             </td>
             <td><%= link_to e.subject, inbox_show_msg_path(:id=> e.id,:read=> 'true') %>
-                <div style="background: lightcoral;align-content: center;width: 100px;text-align: center;
-                        display: inline;border-radius: 6px;float: right;">
-                  <% if  page== "view" && show_inbox(@e) == true%>
+              <div style="background: lightcoral;align-content: center;width: 100px;text-align: center;
+                      display: inline;border-radius: 6px;float: right;">
+                <% if  page== "view" && show_inbox(@e) == true%>
                     Read
-                  <% elsif page=="sent" && (show_sent(@e) == true)  %>
+                <% elsif page=="sent" && (show_sent(@e) == true)  %>
                     Read by all
-                  <% else %>
-                      Not Read
-                  <% end %>
+                <% else %>
+                    Not Read
+                <% end %>
 
-                </div>
+              </div>
             </td>
             <td><%= show_mess(@e) %> </td>
             <td>
               <% if show_time(@e) %>
-              <%= e.created_at.to_s(:short)%>
+                  <%= e.created_at.to_s(:short)%>
               <% else %>
-              <%= time_ago_in_words(e.created_at)+" ago"%>
+                  <%= time_ago_in_words(e.created_at)+" ago"%>
               <%end %>
             </td>
-            <!--td>
-              <%# if  page== "view" && show_inbox(@e) == true%>
-                  Yes
-              <% #elsif page=="sent" && (show_sent(@e) == true)  %>
-                  Yes
-              <% #else %>
-                  No
-              <% #end %>
-            </td-->
-
           </tr>
       <% end %>
   <% end %>

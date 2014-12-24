@@ -1,23 +1,6 @@
 <h3>Compose mail</h3>
 
-<!--<form action="" method="post">
-  Receiver's id<br>
-  <input type="text" name="cf_name"><br>
-  Your id<br>
-  <input type="text" name="cf_email"><br>
-  Message<br>
-  <textarea rows="10" cols="50" name="cf_message"></textarea> <br>
-  <input type="submit" value="Send">
-  <input type="reset" value="Clear">
-</form> -->
-
- <!--%=form_for(@user) do |f| %>
-    <!--%= f.label :name %>
-    <!--%= f.text_field :name %>
-
- <!--% end %-->
-
- <%= form_for :@user do |f| %>
+<%= form_for :@user do |f| %>
   First name: <%= f.text_field :first_name %><br />
   Last name : <%= f.text_field :last_name %><br />
   Biography : <%= f.text_area :biography %><br />

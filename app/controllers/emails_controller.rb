@@ -19,15 +19,12 @@ class EmailsController < ApplicationController
   end
 
   def new
-    #email is my mail table
-    #new only generates a new object
-    #We create an empty mail as soon as the new action is hit
-    #render :layout => false
-    
+
+    #Here we create an empty mail as soon as the new action is hit
+
     @email=Email.new
     @email.is_draft=true
     @email.save
-    # Email.create ( draft true)
 
   end
 
@@ -37,25 +34,31 @@ class EmailsController < ApplicationController
     @r= params[:r]
 
 
-    #@email.update(subject:params[:subject],message:params[:message],sender:current_user.email)
+    #not doing @email.update(subject:params[:subject],message:params[:message],sender:current_user.email)
+    #as we just need to pass the received parameters to the form again
+
+  end
+
+  def test_ajax
+
+    render :text => params[:message]
 
   end
 
   def update
 
+    #this action is hit after any submit from the 'new' form
 
-    
-    @email = Email.find(params[:email][:id]) #email_params is a hash
-    #@email.sender = current_user.email
-    #@email.update(subject:params[:email][:subject],message:params[:email][:message],sender:current_user.email)
 
-    #.merge({:sender => current_user.email}), used above
+    #email_params is a hash
+    @email = Email.find(params[:email][:id])
 
 
     #purge old receivers before every new update
     @email.receivers.each do |x|
       x.destroy
     end
+
 
     #taking comma separated list of receivers and separating them
     @r= params[:email][:receiver_email]
@@ -64,24 +67,23 @@ class EmailsController < ApplicationController
     
     @receiver.each do |r|
 
-      #removing spaces from the ginning
+      #removing spaces from the beginning of a receiver
       s=r.lstrip
       @email.receivers.new(:receiver_email => s)
-      # b.save .merge({:sender => current_user.email})
+
     end
 
+    #common update required both in case of email and draft
     @email.subject = params[:email][:subject]
     @email.message = params[:email][:message]
     @email.sender = current_user.email
 
-    #puts email_params
-    #@recipients = @email.receiver.split(',')
 
 
     #send email or save as draft functionality
-
+    #if params[:commit] equals Send
     if params[:commit] == "Send"
-        #@email.is_draft=false
+
         
         @email.is_draft = false
         @email.created_at= Time.now
@@ -90,44 +92,50 @@ class EmailsController < ApplicationController
           flash[:notice] = "Mail sent successfully."
           redirect_to root_path
 
-          #redirect_to :action => 'index', notice: "Mail sent successfully."
+          #for actually sending the email, currently not working
           # UserMailer.send_email(@email).deliver
-         
+
         else
-          #@email.update(:is_draft=>true)
-          #redirect_to edit_email_path(:show=>"email",:email=>@email,:rec=>params[:email][:receiver_email]), alert: "Error sending mail."
-          
+
           flash[:alert] = @email.errors.full_messages
           render :edit 
       #else  redirect_to new_email_path, alert:"Cannot send more than 5 messages in 15 mins.!!"
       end
-      #@email.save
-      #redirect_to @email
+
       #@email= Email.create(params[:email]).permit(:receiver,:sender,:message)
 
+
     #if params[:commit] does not equal send
-    else
+    elsif params[:commit] == "Draft"
       
         @email.is_draft = true
         @email.created_at = Time.now
-       
+
+        #respond_to do |format|
+        #if @email.save
+        #    format.html { redirect_to root_path, notice:'Draft successfully saved!' }
+        #  else
+        #    format.html { render :edit, alert:'Draft was not saved!' }
+        #  end
+        #end
+
         if @email.save
 
-        flash[:notice] = "Draft successfully saved!"
-        redirect_to :action => 'index'
+          flash[:notice] = "Draft successfully saved!"
+          redirect_to root_path
         else
-        redirect_to new_email_path, alert:"Draft not saved, try again!"
+
+          redirect_to new_email_path, alert:"Draft not saved, try again!"
         end
 
     end
 
-    @trial = Email.find(@email.id)
 
   end
 
 
 
-   # def create
+   def create
    #   #creates as well as saves the information
    #
    #   puts "^^^^^^^^^^^^^^"
@@ -201,16 +209,14 @@ class EmailsController < ApplicationController
    #
    #
    #
-   # end
+   end
 
 
   private
+
     def email_params
      #permits the use of these attributes for all the functions
-     #no need to permit
-     params.require(:email).permit(:subject,:message,:id)
+      params.require(:email).permit(:subject,:message,:id)
     end
-   #Email.create(params[:email]).permit(:receiver,:sender,:message)
-
- end
+end
 

@@ -23,22 +23,22 @@ module InboxHelper
 
  def show_time(e)
 
+   #helper to show date if mail older than five days
    ((Time.now - e.created_at)/5.day) > 1
  end
 
 
   def show_mess(e,length=10)
 
+    #helper to trim message if longer than length
 
     if e.message.blank?
       ""
+
     elsif e.message.length > length
-      # if > length : ellipsis show with 10 char
-      # else - full message
       e.message.first(length) + "..."
 
     else
-
       e.message
 
     end
