@@ -41,8 +41,23 @@ class EmailsController < ApplicationController
 
   def test_ajax
 
-    render :text => params[:message]
+    @email= Email.find(params[:id])
+    @email.subject = params[:subject]
+    @email.message = params[:message]
+    @email.sender = current_user.email
+    @email.is_draft = true
+    @email.created_at = Time.now
 
+    if @email.save
+      respond_to do |format|
+        format.json { render :json=> nil, status: :ok }
+      end
+
+    else
+      respond_to do |format|
+        format.json { render :json => @email.errors, :status => :unprocessable_entity }
+      end
+    end
   end
 
   def update
@@ -78,6 +93,12 @@ class EmailsController < ApplicationController
     @email.message = params[:email][:message]
     @email.sender = current_user.email
 
+    puts "***************"
+    puts @email.subject
+    puts @email.message
+    puts @email.receivers
+    puts "***************"
+
 
 
     #send email or save as draft functionality
@@ -97,7 +118,7 @@ class EmailsController < ApplicationController
 
         else
 
-          flash[:alert] = @email.errors.full_messages
+          #flash[:alert] = @email.errors.full_messages
           render :edit 
       #else  redirect_to new_email_path, alert:"Cannot send more than 5 messages in 15 mins.!!"
       end

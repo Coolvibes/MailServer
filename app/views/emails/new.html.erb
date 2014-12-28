@@ -14,19 +14,34 @@
 
 <%= form_for @email, :html=>{:id=>"form"} do |f| %>
 
-
-      <%= f.label :subject %><br>
-      <%= f.text_field :subject,value: @email.subject%><br>
+      <div id="error_span"></div>
+      <div>
+        <%= f.label :subject %><br>
+        <%= f.text_field :subject,value: @email.subject%><br>
+        <span class="error">Should be filled</span>
+      </div>
       <%= f.hidden_field :id, :value => @email.id %>
-      <%= f.label :receiver_email %><br>
-      <%= f.text_field :receiver_email %><br>
-      <%= f.label :message %><br>
-      <%= f.text_area(:message, size: '50x10', :value => @email.message)%><br>
-      <%= f.submit "Send" %>
-      <%= f.submit "Draft" %>
-      <input type="button" value="Test" onclick="formData()"/>
-
+      <div>
+        <%= f.label :receiver_email %><br>
+        <%= f.text_field :receiver_email %><br>
+        <span class="error">Should be a valid email</span>
+      </div>
+      <div>
+        <%= f.label :message %><br>
+        <%= f.text_area(:message, size: '50x10', :value => @email.message)%><br>
+        <span class="error"></span>
+      </div>
+      <div>
+      <%= f.submit "Send",:id=>'submit_button'%>
+      <input type="button" id="draft_button" value="Draft" onclick="formData()"/>
+      <p id="para"></p>
+      </div>
       <!--  , :input_html => { :onclick => "setUnsaved()"} -->
 
 <% end %>
 </div>
+<script type="text/javascript">
+  $(document).ready(function () {
+      validate_data();
+  })
+</script>

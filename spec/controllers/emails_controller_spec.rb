@@ -12,6 +12,63 @@ RSpec.describe EmailsController, :type => :controller do
 
   end
 
+  describe "test_ajax action testing" do
+
+    it "finds the email correctly" do
+
+      @email1=FactoryGirl.create(:email, id:2016)
+      # Email.stub(:find).and_return(email1)
+
+      post :test_ajax, id:@email1.id, :format => :json
+
+      email=Email.find(controller.params[:id])
+
+      #email= FactoryGirl(:email,id:controller.params[:id])
+
+      email.id.should eq @email1.id
+      #assigns(:email).id.should eq email1.id
+    end
+
+    it "renders JSON with correct hash" do
+
+      @expected ={
+          :json=> nil,
+          :status=> :ok
+      }.to_json
+
+      @email1=FactoryGirl.create(:email, id:2016)
+
+      post :test_ajax, :format=> :json,:id=> @email1.id
+
+      #FactoryGirl.build(:email)
+      response.status.should eq 200
+      response.body.should == "null"
+
+    end
+
+    it "checks for failure to save" do
+
+      @email1=FactoryGirl.create(:email, id:2016)
+      #controller.instance_variable_set(:@email,@email1)
+
+      #set(:email) { FactoryGirl(:email,id:2017,sender:"kdkdkdk") }
+
+      post :test_ajax, :format=> :json,:id=> @email1.id,:subject=>"hjsdhj"
+
+      #controller.instance_variable_set(:@email.sender,"kjfkjgfj")
+
+
+      assigns(:email).should be_a(Email)
+
+      #assigns(:email).should be_a(Email).with(:sender=> "hjsdhj"*100)
+
+      assigns(:email).should be_valid
+      assigns(:email).subject.should eq "hjsdhj"
+
+    end
+
+  end
+
   describe "new action" do
 
     it "new creates a new email entry" do

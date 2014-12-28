@@ -2,7 +2,25 @@
 
 <%= javascript_include_tag "check_before_leave" %>
 
+<%= javascript_include_tag "apply_ajax" %>
+
+<div style="border:2px solid #a1a1a1;
+        margin-top:20px;
+        font-size:15px;
+        padding:10px 40px;
+        background:#dddddd;
+        width:400px;
+        border-radius:25px;">
+
 <%= form_for @email do |f| %>
+
+      <p>
+      <%if @email.errors.any? %>
+          <% @email.errors.full_messages.each do |message| %>
+               * <%=message%> *
+          <%end%>
+      <%end %>
+      </p>
 
     <%= f.label :subject %><br>
     <%= f.text_field :subject,value: @email.subject%><br>
@@ -14,6 +32,9 @@
     <%= f.text_area(:message, size: '50x10', :value => @email.message)%><br>
 
     <%= f.submit "Send" %>
-    <%= f.submit "Draft" %>
+      <input type="button" id="draft_button" value="Draft" onclick="formData()"/>
+      <p id="para"></p>
 
 <% end %>
+
+</div>

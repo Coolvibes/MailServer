@@ -13,3 +13,12 @@
  *= require_tree .
  *= require_self
  */
+.error{
+    display:none;
+}
+
+.error_show{
+
+    color:red;
+    font-size: 12px;
+}

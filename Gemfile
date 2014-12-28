@@ -20,7 +20,7 @@ gem 'will_paginate'
 #Gem for using RSpec for testing apps
 gem "rspec-rails", :group => [:test, :development]
 
-group :test do
+group :development,:test do
   gem "factory_girl_rails"
   gem "capybara"
   gem "guard-rspec"
