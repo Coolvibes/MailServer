@@ -33,7 +33,7 @@ module InboxHelper
     #helper to trim message if longer than length
 
     if e.message.blank?
-      ""
+      "..."
 
     elsif e.message.length > length
       e.message.first(length) + "..."

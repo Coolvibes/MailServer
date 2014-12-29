@@ -2,7 +2,7 @@ class InboxController < ApplicationController
 
   def view
     #def to display the inbox
-    @emails=Email.joins(:receivers).where(receivers: { receiver_email: current_user.email }).order(created_at: :desc).
+    @emails=Email.joins(:receivers).where(receivers: { receiver_email: current_user.email },is_draft:false).order(created_at: :desc).
         paginate(:page => params[:page], :per_page => 4)
 
   end
@@ -24,6 +24,7 @@ class InboxController < ApplicationController
 
   def delete_draft
 
+    #to delete a draft
     e=Email.find(params[:id])
 
     if e.destroy

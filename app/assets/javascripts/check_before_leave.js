@@ -1,6 +1,8 @@
+var unsaved;
 
+function check_before(){
 
-var unsaved = false;
+unsaved = true;
 
 //function to trigger change in case of any input change
 
@@ -26,3 +28,4 @@ $("input[type='submit']").click(function() {
 
 
 window.onbeforeunload = unloadPage;
+}

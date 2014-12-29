@@ -9,7 +9,7 @@ class Email < ActiveRecord::Base
 
   validates_presence_of :receivers, :if => :is_not_draft?
 
-  validate :allow_create?
+  #validate :allow_create?
 
   belongs_to :user
 

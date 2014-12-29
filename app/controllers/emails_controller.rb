@@ -1,14 +1,5 @@
 class EmailsController < ApplicationController
 
-  #layout my_layout
-
-  #def my_layout
-  #params[:action] != 'new' ? 'application' : nil
-  #end
-
-  layout nil
-  layout 'application', :except => 'new'
-
   def compose
   end
 
@@ -30,6 +21,8 @@ class EmailsController < ApplicationController
 
   def edit
 
+    #to render the same page again on unsuccessful save
+
     @email=Email.find(params[:id])
     @r= params[:r]
 
@@ -41,12 +34,28 @@ class EmailsController < ApplicationController
 
   def test_ajax
 
+    #draft function refactored by AJAX
+
     @email= Email.find(params[:id])
     @email.subject = params[:subject]
     @email.message = params[:message]
     @email.sender = current_user.email
     @email.is_draft = true
     @email.created_at = Time.now
+
+    @email.receivers.each do |x|
+      x.destroy
+    end
+
+    @receiver = params[:receiver].split(',')
+
+    @receiver.each do |r|
+
+      #removing spaces from the beginning of a receiver
+      s=r.lstrip
+      @email.receivers.new(:receiver_email => s)
+
+    end
 
     if @email.save
       respond_to do |format|
@@ -62,7 +71,7 @@ class EmailsController < ApplicationController
 
   def update
 
-    #this action is hit after any submit from the 'new' form
+    #this action is hit after any submit with an id from the 'new' form
 
 
     #email_params is a hash
@@ -93,19 +102,14 @@ class EmailsController < ApplicationController
     @email.message = params[:email][:message]
     @email.sender = current_user.email
 
-    puts "***************"
-    puts @email.subject
-    puts @email.message
-    puts @email.receivers
-    puts "***************"
-
-
 
     #send email or save as draft functionality
+
     #if params[:commit] equals Send
     if params[:commit] == "Send"
 
-        
+      if @email.allow_create?
+
         @email.is_draft = false
         @email.created_at= Time.now
 
@@ -119,35 +123,33 @@ class EmailsController < ApplicationController
         else
 
           #flash[:alert] = @email.errors.full_messages
-          render :edit 
-      #else  redirect_to new_email_path, alert:"Cannot send more than 5 messages in 15 mins.!!"
+          render :edit
+
+        end
+      else  
+        flash[:alert] = "Cannot send more than 5 messages in 15 mins.!!"
+        render :edit
+        #alert:"Cannot send more than 5 messages in 15 mins.!!"
       end
 
       #@email= Email.create(params[:email]).permit(:receiver,:sender,:message)
 
 
-    #if params[:commit] does not equal send
+      #if params[:commit] does not equal send
     elsif params[:commit] == "Draft"
-      
-        @email.is_draft = true
-        @email.created_at = Time.now
 
-        #respond_to do |format|
-        #if @email.save
-        #    format.html { redirect_to root_path, notice:'Draft successfully saved!' }
-        #  else
-        #    format.html { render :edit, alert:'Draft was not saved!' }
-        #  end
-        #end
 
-        if @email.save
+      @email.is_draft = true
+      @email.created_at = Time.now
 
-          flash[:notice] = "Draft successfully saved!"
-          redirect_to root_path
-        else
+          if @email.save
 
-          redirect_to new_email_path, alert:"Draft not saved, try again!"
-        end
+        flash[:notice] = "Draft successfully saved!"
+        redirect_to root_path
+      else
+
+        render :edit, alert:"Draft not saved, try again!"
+      end
 
     end
 
@@ -157,79 +159,7 @@ class EmailsController < ApplicationController
 
 
    def create
-   #   #creates as well as saves the information
-   #
-   #   puts "^^^^^^^^^^^^^^"
-   #   puts params[:email][:id]
-   #
-   #   @email = Email.new(email_params) #email_params is a hash
-   #   @email.sender = current_user.email
-   #
-   #   #.merge({:sender => current_user.email}), used above
-   #   puts "=============="
-   #   puts current_user
-   #
-   #
-   #   #taking comma separated list of receivers and separating them
-   #   @receiver = params[:email][:receiver_email].split(',')
-   #
-   #   @receiver.each do |r|
-   #     @email.receivers.new(:receiver_email => r)
-   #     # b.save .merge({:sender => current_user.email})
-   #   end
-   #
-   #   #puts email_params
-   #   #@recipients = @email.receiver.split(',')
-   #
-   #   #@recipients.each do |r|
-   #   # newmail= @email.new(:receiver=>r)
-   #     #newmail.save
-   #   #end
-   #  # if params[:commit] == "send"
-   #
-   #     puts "++++++++++++++"
-   #     puts params[:commit]
-   #  #send email or save as draft functionality
-   #
-   #   if params[:commit] == "Send"
-   #
-   #
-   #     if @email.allow_create?
-   #
-   #       @email.is_draft=false
-   #
-   #       if @email.save
-   #
-   #         redirect_to :action => 'index', alert: "Mail sent successfully."
-   #         # UserMailer.send_email(@email).deliver
-   #         #redirect_to :action => 'index', alert: "Mail sent successfully."
-   #       else
-   #         redirect_to new_email_path, alert: "Error sending mail."
-   #       end
-   #
-   #     else  redirect_to new_email_path, alert:"Cannot send more than 5 messages in 15 mins.!!"
-   #     end
-   #     #@email.save
-   #     #redirect_to @email
-   #     #@email= Email.create(params[:email]).permit(:receiver,:sender,:message)
-   #
-   #   else
-   #
-   #     @email.is_draft=true
-   #
-   #     if @email.save
-   #
-   #       redirect_to :action => 'index', alert: "Draft successfully saved!"
-   #     else
-   #       redirect_to new_email_path, alert: "Draft not saved, try again!"
-   #     end
-   #
-   #   end
-   #
-   #   @trial = Email.find(@email.id)
-   #
-   #
-   #
+   
    end
 
 

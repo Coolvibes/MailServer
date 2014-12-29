@@ -32,9 +32,9 @@
         <span class="error"></span>
       </div>
       <div>
-      <%= f.submit "Send",:id=>'submit_button'%>
-      <input type="button" id="draft_button" value="Draft" onclick="formData()"/>
-      <p id="para"></p>
+        <%= f.submit "Send",:id=>'submit_button'%>
+        <input type="button" id="draft_button" value="Draft" onclick="formData()" />
+        <p id="para"></p>
       </div>
       <!--  , :input_html => { :onclick => "setUnsaved()"} -->
 
@@ -43,5 +43,6 @@
 <script type="text/javascript">
   $(document).ready(function () {
       validate_data();
+      check_before();
   })
 </script>

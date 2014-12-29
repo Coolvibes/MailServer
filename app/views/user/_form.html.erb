@@ -23,7 +23,8 @@
                   <%= current_user.email %>
               <% end %>
             </td>
-            <td><%= link_to e.subject, inbox_show_msg_path(:id=> e.id,:read=> 'true') %>
+            <td><%= e.subject %></td>
+            <td><%= link_to show_mess(@e), inbox_show_msg_path(:id=> e.id,:read=> 'true') %>
               <div style="background: lightcoral;align-content: center;width: 100px;text-align: center;
                       display: inline;border-radius: 6px;float: right;">
                 <% if  page== "view" && show_inbox(@e) == true%>
@@ -36,7 +37,6 @@
 
               </div>
             </td>
-            <td><%= show_mess(@e) %> </td>
             <td>
               <% if show_time(@e) %>
                   <%= e.created_at.to_s(:short)%>
