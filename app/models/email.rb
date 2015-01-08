@@ -9,8 +9,6 @@ class Email < ActiveRecord::Base
 
   validates_presence_of :receivers, :if => :is_not_draft?
 
-  #validate :allow_create?
-
   belongs_to :user
 
   attr_accessor :receiver_email
@@ -27,7 +25,7 @@ class Email < ActiveRecord::Base
 
   def allow_create?
 
-    Email.where('created_at >= ?', 5.minutes.ago).where(is_draft: false).where(sender: self.sender).count< 5
+     Email.where('created_at >= ?', 15.minutes.ago).where(is_draft: false).where(sender: self.sender).count< 5
   end
 
 end

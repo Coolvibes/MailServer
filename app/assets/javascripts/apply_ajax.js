@@ -5,7 +5,6 @@ function validate_data() {
     //Client side validations
 
     
-
     $("#error_span").html("");
 
     error_free=true;
@@ -40,25 +39,7 @@ function validate_data() {
             msg = msg + "*Receiver cannot be blank*";
         }
 
-
-       /* var form_data = $("#form").serializeArray();
-        error_free = true;
-        for (var input in form_data) {
-            var element = $("#email_" + form_data[input]['name']);
-            var valid = element.hasClass("valid");
-
-           // var error_element = $("span", element.parent());
-            if (!valid) {
-
-                //error_element.removeClass("error").addClass("error_show");
-                error_free = false;
-            }
-            else {
-                error_element.removeClass("error_show").addClass("error");
-            }
-            */
-        
-        if (!error_free) {
+       if (!error_free) {
             
             $("#error_span").html(msg);
             event.preventDefault();
@@ -79,8 +60,9 @@ function formData() {
         type: "POST",
         url: url,
         data: {
-            //id for subject is registered as email_subject in the html
+            //id for subject is registered as email_subject in the erb form
             //in controller, we have to display using params only, like params[:subject]
+
             "subject": $('#email_subject').val(),
             "receiver": $('#email_receiver_email').val(),
             "message": $('#email_message').val(),
@@ -102,7 +84,4 @@ function formData() {
 
 
 
-//to check javascript function
-function throughAjax(){
 
-}

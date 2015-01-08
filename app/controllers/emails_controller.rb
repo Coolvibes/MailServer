@@ -122,19 +122,16 @@ class EmailsController < ApplicationController
 
         else
 
-          #flash[:alert] = @email.errors.full_messages
           render :edit
 
         end
       else  
         flash[:alert] = "Cannot send more than 5 messages in 15 mins.!!"
         render :edit
-        #alert:"Cannot send more than 5 messages in 15 mins.!!"
+        
       end
 
-      #@email= Email.create(params[:email]).permit(:receiver,:sender,:message)
-
-
+      
       #if params[:commit] does not equal send
     elsif params[:commit] == "Draft"
 

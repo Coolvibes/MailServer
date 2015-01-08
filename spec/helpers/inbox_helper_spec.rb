@@ -19,7 +19,7 @@ RSpec.describe InboxHelper, :type => :helper do
 
        email = Email.create(:message=>nil)
 
-       helper.show_mess(email,8).should eq ""
+       helper.show_mess(email,8).should eq "..."
 
      end
 
