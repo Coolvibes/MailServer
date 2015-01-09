@@ -17,7 +17,7 @@ RSpec.describe EmailsController, :type => :controller do
 
       @email1=FactoryGirl.create(:email, id:2016)
       
-      post :test_ajax, id:@email1.id, :format => :json
+      post :test_ajax, id:@email1.id, :format => :json, :receiver=>"medha@josh.com"
 
       email=Email.find(controller.params[:id])
 
@@ -34,7 +34,7 @@ RSpec.describe EmailsController, :type => :controller do
 
       @email1=FactoryGirl.create(:email, id:240)
 
-      post :test_ajax, :format=> :json,:id=> @email1.id
+      post :test_ajax, :format=> :json,:id=> @email1.id, :receiver=>"medha@josh.com"
 
       response.status.should eq 200
       response.body.should == "null"
@@ -46,7 +46,7 @@ RSpec.describe EmailsController, :type => :controller do
       @email1=FactoryGirl.create(:email, id:240)
       
 
-      post :test_ajax, :format=> :json,:id=> @email1.id,:subject=>"hjsdhj"
+      post :test_ajax, :format=> :json,:id=> @email1.id,:subject=>"hjsdhj", :receiver=>"medha@josh.com"
 
       assigns(:email).should be_a(Email)
 
